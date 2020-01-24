@@ -36,7 +36,7 @@
       
       <mat-menu #appMenu="matMenu">
         <button mat-menu-item (click)="openUserForm('Editar', element)">Editar</button>
-        <button mat-menu-item>Eliminar</button>
+        <button mat-menu-item (click)="openModalConfirm(element)">Eliminar</button>
       </mat-menu>
       
       <button mat-icon-button [matMenuTriggerFor]="appMenu">

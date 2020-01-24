@@ -116,4 +116,8 @@ export class UsersFormComponent implements OnInit {
       )
   }
 
+  cancelar(){
+    this.dialogRef.close(false)
+  }
+
 }

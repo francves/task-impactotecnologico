@@ -35,5 +35,12 @@ export class UsersService {
     return this.http.put<any[]>(url, userData, {headers});
   }
 
+  deleteUser(userData){
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+    const url = `${this.apiUrl}users/${userData.id}`;
+    return this.http.delete<any>(url, {headers})
+  }
+
 }
 
