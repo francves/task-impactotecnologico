@@ -1,13 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { PostsService} from './../../services/posts.service'
-
-export interface posts {
-  id: string;
-  user_id: string;
-  title: string;
-  body: string;
-  image: string;
-}
+import { Post } from './../../models/post';
 
 @Component({
   selector: 'app-posts',
@@ -16,7 +9,7 @@ export interface posts {
 })
 export class PostsComponent implements OnInit {
 
-  postList: posts[]
+  postList: Post[]
   postimage: string = 'http://lorempixel.com/600/400/'
 
   constructor(private postsService: PostsService) { }

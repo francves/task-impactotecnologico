@@ -1,18 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
-import { UsersService} from '../../services/users.service'
-
-export interface users {
-  id: string;
-  first_name: string;
-  last_name: string;
-  gender: string;
-  dob: string;
-  email: string;
-  phone: string;
-  website: string;
-  address: string;
-}
+import { UsersService} from '../../services/users.service';
+import { User } from './../../models/user';
 
 @Component({
   selector: 'app-users',
@@ -22,7 +11,7 @@ export interface users {
 export class UsersComponent implements OnInit {
 
   displayedColumns: string[] = ['name', 'gender', 'dob', 'email', 'phone', 'actions'];
-  dataSource = new MatTableDataSource();
+  dataSource = new MatTableDataSource<User>();
 
   constructor(private usersService: UsersService) { }
 
