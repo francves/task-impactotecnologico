@@ -1,4 +1,5 @@
 <mat-card class="post-card" *ngFor="let post of postList">
+  <mat-progress-bar *ngIf="waitingServices" mode="indeterminate"></mat-progress-bar>
   <mat-card-header>
     <mat-card-title>{{post.title}}</mat-card-title>
   </mat-card-header>

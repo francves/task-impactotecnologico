@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import {MatTableDataSource} from '@angular/material/table';
 import { UsersService} from '../../services/users.service';
 import { User } from './../../models/user';
@@ -11,11 +11,13 @@ import { ModalConfirmarComponent } from './../../../shared/components/modal-conf
   templateUrl: './users.component.html',
   styleUrls: ['./users.component.scss']
 })
-export class UsersComponent implements OnInit {
+export class UsersComponent implements OnInit, OnDestroy {
 
-  displayedColumns: string[] = ['name', 'gender', 'dob', 'email', 'phone', 'actions'];
+  displayedColumns: string[] = ['name', 'dob', 'email', 'phone', 'actions'];
   dataSource = new MatTableDataSource<User>();
   errorMessage: any;
+  waitingServices = false;
+  subUsers: any;
 
   constructor(
     private usersService: UsersService,
@@ -32,11 +34,14 @@ export class UsersComponent implements OnInit {
   }
 
   getUsers(){
+    this.waitingServices = true
     this.usersService.getUsers().subscribe(users => {
       console.log("usuarios ", users)
       this.dataSource.data = users.result 
+      this.waitingServices = false
     }, error => {
       this.errorMessage = <any>error
+      this.waitingServices = false
     },
     () => {
     }
@@ -57,6 +62,7 @@ export class UsersComponent implements OnInit {
     dialogRefUserForm.afterClosed().subscribe(res => {
         if ( res ) {
         //Success
+        this.getUsers()
     }
     })
   }
@@ -83,12 +89,19 @@ export class UsersComponent implements OnInit {
     this.usersService.deleteUser(userData)
       .subscribe(deleteUser => {
         console.log("Usuario eliminado", deleteUser)
+        this.getUsers()
       }, error => {
         this.errorMessage = <any>error
       },
       () => {
       }
       )
+  }
+
+  ngOnDestroy() {
+    if(this.subUsers){
+      this.subUsers.unsubscribe();
+    }    
   }
 
 }

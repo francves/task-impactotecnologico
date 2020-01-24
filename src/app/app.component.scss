@@ -21,3 +21,11 @@
     bottom: 15px;
     right: 15px;
 }
+
+::ng-deep #modal-content{
+    padding: 0 24px 24px 24px !important;
+}
+
+::ng-deep .container{
+    margin: 20px;
+}

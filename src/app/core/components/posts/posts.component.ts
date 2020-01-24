@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { PostsService} from './../../services/posts.service'
 import { Post } from './../../models/post';
 import { PostsFormComponent } from './posts-form/posts-form.component';
@@ -11,11 +11,13 @@ import { ActivatedRoute } from '@angular/router';
   templateUrl: './posts.component.html',
   styleUrls: ['./posts.component.scss']
 })
-export class PostsComponent implements OnInit {
+export class PostsComponent implements OnInit, OnDestroy {
 
   postList: Post[]
   postimage: string = 'http://lorempixel.com/600/400/'
   errorMessage: any
+  waitingServices = false
+  subPosts: any
 
   constructor(
     private postsService: PostsService,
@@ -29,11 +31,19 @@ export class PostsComponent implements OnInit {
   }
 
   getPosts(){
+    this.waitingServices = true
     let userId = this.route.snapshot.paramMap.get('id')
-    this.postsService.getPosts(userId).subscribe(posts => {
+    this.subPosts = this.postsService.getPosts(userId).subscribe(posts => {
       console.log("posts ", posts)
       this.postList = posts.result
-    })
+      this.waitingServices = false
+    }, error => {
+      this.errorMessage = <any>error
+      this.waitingServices = false
+    },
+    () => {
+    }
+    )
   }
 
   openPostForm(action: string, postData?: Post){
@@ -51,6 +61,7 @@ export class PostsComponent implements OnInit {
     dialogRefPostForm.afterClosed().subscribe(res => {
         if ( res ) {
         //Success
+        this.getPosts()
     }
     })
   }
@@ -60,7 +71,7 @@ export class PostsComponent implements OnInit {
       width: '600px',
       panelClass: 'formModal',
       data: {
-          elemento: "usuario"
+          elemento: "post"
       }
     })
 
@@ -77,12 +88,19 @@ export class PostsComponent implements OnInit {
     this.postsService.deletePost(postData)
       .subscribe(deletePost => {
         console.log("Post eliminado", deletePost)
+        this.getPosts()
       }, error => {
         this.errorMessage = <any>error
       },
       () => {
       }
       )
+  }
+
+  ngOnDestroy() {
+    if(this.subPosts){
+      this.subPosts.unsubscribe();
+    }    
   }
 
 }
