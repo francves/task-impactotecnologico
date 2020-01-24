@@ -13,10 +13,11 @@ export class PostsService {
 
   constructor(private http: HttpClient) { }
 
-  getPosts(): Observable<any> {
+  getPosts(userId: string): Observable<any> {
     let params = new HttpParams()
         .set('_format', 'json')
         .set('access-token', this.token)
+        .set('user_id', userId)
     const url = `${this.apiUrl}posts`;
     return this.http.get<any>(url, {params});
   }

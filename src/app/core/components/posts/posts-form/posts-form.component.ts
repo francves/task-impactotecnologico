@@ -59,7 +59,7 @@ export class PostsFormComponent implements OnInit {
         console.log("Formulario valido!")
         let _post = {
           id: this.data.postData ? this.data.postData.id : null,
-          user_id: "260",
+          user_id: this.data.userId,
           title: this.form.get('title').value,
           body: this.form.get('body').value
         }

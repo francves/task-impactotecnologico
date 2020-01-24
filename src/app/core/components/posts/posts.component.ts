@@ -4,6 +4,7 @@ import { Post } from './../../models/post';
 import { PostsFormComponent } from './posts-form/posts-form.component';
 import { MatDialog } from '@angular/material';
 import { ModalConfirmarComponent } from './../../../shared/components/modal-confirmar/modal-confirmar.component';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-posts',
@@ -19,7 +20,8 @@ export class PostsComponent implements OnInit {
   constructor(
     private postsService: PostsService,
     public dialogPostForm: MatDialog,
-    public dialogConfirm: MatDialog
+    public dialogConfirm: MatDialog,
+    private route: ActivatedRoute
     ) { }
 
   ngOnInit() {
@@ -27,7 +29,8 @@ export class PostsComponent implements OnInit {
   }
 
   getPosts(){
-    this.postsService.getPosts().subscribe(posts => {
+    let userId = this.route.snapshot.paramMap.get('id')
+    this.postsService.getPosts(userId).subscribe(posts => {
       console.log("posts ", posts)
       this.postList = posts.result
     })
@@ -39,6 +42,7 @@ export class PostsComponent implements OnInit {
         panelClass: 'formModal',
         data: {
             action: action,
+            userId: this.route.snapshot.paramMap.get('id'),
             postData: postData ? postData : null
         }
     })
