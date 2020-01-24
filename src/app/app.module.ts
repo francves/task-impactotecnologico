@@ -27,6 +27,7 @@ import { UsersComponent } from './core/components/users/users.component';
 import { PostsComponent } from './core/components/posts/posts.component';
 import { UsersFormComponent } from './core/components/users/users-form/users-form.component';
 import { ModalConfirmarComponent } from './shared/components/modal-confirmar/modal-confirmar.component';
+import { PostsFormComponent } from './core/components/posts/posts-form/posts-form.component';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { ModalConfirmarComponent } from './shared/components/modal-confirmar/mod
     UsersComponent,
     PostsComponent,
     UsersFormComponent,
-    ModalConfirmarComponent
+    ModalConfirmarComponent,
+    PostsFormComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +63,8 @@ import { ModalConfirmarComponent } from './shared/components/modal-confirmar/mod
   ],
   entryComponents: [
     UsersFormComponent,
-    ModalConfirmarComponent
+    ModalConfirmarComponent,
+    PostsFormComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

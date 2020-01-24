@@ -1,0 +1,30 @@
+<mat-toolbar matDialogTitle>
+  <span> {{action}} post </span>
+  <span class="spacer"></span>
+  <button mat-button class="mat-icon-button" (click)="cancelar()" aria-label="Close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="Titulo" formControlName="title">
+  </mat-form-field>
+  <mat-form-field>
+    <textarea matInput placeholder="Texto del post" formControlName="body"></textarea>
+  </mat-form-field>
+  <mat-progress-bar *ngIf="waitingServices" mode="indeterminate"></mat-progress-bar>
+  <div>
+    <button 
+      [disabled] = "waitingServices" 
+      type="submit" 
+      mat-raised-button 
+      color="primary">
+      Guardar
+    </button>
+    <button
+      [disabled] = "waitingServices" 
+      mat-button color="primary" (click)="cancelar()">
+        Cancelar
+    </button>
+  </div>
+</form>
