@@ -3,5 +3,4 @@ export class Post {
   user_id: string;
   title: string;
   body: string;
-  image: string;
 }

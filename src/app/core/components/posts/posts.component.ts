@@ -3,6 +3,7 @@ import { PostsService} from './../../services/posts.service'
 import { Post } from './../../models/post';
 import { PostsFormComponent } from './posts-form/posts-form.component';
 import { MatDialog } from '@angular/material';
+import { ModalConfirmarComponent } from './../../../shared/components/modal-confirmar/modal-confirmar.component';
 
 @Component({
   selector: 'app-posts',
@@ -13,10 +14,12 @@ export class PostsComponent implements OnInit {
 
   postList: Post[]
   postimage: string = 'http://lorempixel.com/600/400/'
+  errorMessage: any
 
   constructor(
     private postsService: PostsService,
-    public dialogPostForm: MatDialog
+    public dialogPostForm: MatDialog,
+    public dialogConfirm: MatDialog
     ) { }
 
   ngOnInit() {
@@ -36,7 +39,7 @@ export class PostsComponent implements OnInit {
         panelClass: 'formModal',
         data: {
             action: action,
-            userData: postData ? postData : null
+            postData: postData ? postData : null
         }
     })
 
@@ -47,4 +50,35 @@ export class PostsComponent implements OnInit {
     }
     })
   }
+
+  openModalConfirm(postData: Post){
+    const dialogRefModalConfirm = this.dialogConfirm.open(ModalConfirmarComponent, {
+      width: '600px',
+      panelClass: 'formModal',
+      data: {
+          elemento: "usuario"
+      }
+    })
+
+    // Evento que espera el cerrado del dialogo
+    dialogRefModalConfirm.afterClosed().subscribe(res => {
+      if ( res ) {
+        //Success
+        this.deletePost(postData)
+      }
+    })
+  }
+
+  deletePost(postData: Post){
+    this.postsService.deletePost(postData)
+      .subscribe(deletePost => {
+        console.log("Post eliminado", deletePost)
+      }, error => {
+        this.errorMessage = <any>error
+      },
+      () => {
+      }
+      )
+  }
+
 }

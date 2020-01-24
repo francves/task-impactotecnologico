@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs'
 import { environment } from './../../../environments/environment';
 
@@ -19,5 +19,27 @@ export class PostsService {
         .set('access-token', this.token)
     const url = `${this.apiUrl}posts`;
     return this.http.get<any>(url, {params});
-}
+  }
+
+  addPost(postData): Observable<any> {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+    const url = `${this.apiUrl}posts`;
+    return this.http.post<any>(url, postData, {headers});
+  }
+
+  editPost(postData): Observable<any> {
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+    const url = `${this.apiUrl}posts/${postData.id}`;
+    return this.http.put<any[]>(url, postData, {headers});
+  }
+
+  deletePost(postData){
+    let headers = new HttpHeaders()
+    .set('Authorization', `Bearer ${this.token}`)
+    const url = `${this.apiUrl}posts/${postData.id}`;
+    return this.http.delete<any>(url, {headers})
+  }
+
 }
