@@ -6,35 +6,59 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { 
-  MatCardModule,
   MatButtonModule,
+  MatCardModule,
+  MatDatepickerModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
-  MatInputModule, 
-  MatTableModule 
-} from '@angular/material'
+  MatInputModule,
+  MatMenuModule,
+  MatNativeDateModule,
+  MatOptionModule,
+  MatProgressBarModule,
+  MatSelectModule,
+  MatTableModule,
+  MatToolbarModule
+} from '@angular/material';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HomeComponent } from './core/components/home/home.component';
 import { UsersComponent } from './core/components/users/users.component';
 import { PostsComponent } from './core/components/posts/posts.component';
+import { UsersFormComponent } from './core/components/users/users-form/users-form.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
     UsersComponent,
-    PostsComponent
+    PostsComponent,
+    UsersFormComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FormsModule,
     HttpClientModule,
     MatButtonModule,
     MatCardModule,
+    MatDatepickerModule,
+    MatDialogModule,
     MatFormFieldModule,
     MatIconModule,
     MatInputModule,
-    MatTableModule
+    MatMenuModule,
+    MatNativeDateModule,
+    MatOptionModule,
+    MatProgressBarModule,
+    MatSelectModule,
+    MatTableModule,
+    MatToolbarModule,
+    ReactiveFormsModule
+  ],
+  entryComponents: [
+    UsersFormComponent
   ],
   providers: [],
   bootstrap: [AppComponent]

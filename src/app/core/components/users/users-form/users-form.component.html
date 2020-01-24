@@ -1,0 +1,59 @@
+<mat-toolbar matDialogTitle>
+  <span> {{action}} usuarios </span>
+  <span class="spacer"></span>
+  <button mat-button class="mat-icon-button" (click)="dialogRef.close()" aria-label="Close dialog">
+    <mat-icon>close</mat-icon>
+  </button>
+</mat-toolbar>
+<form [formGroup]="form" (ngSubmit)="onSubmit()">
+  <mat-form-field>
+    <input matInput placeholder="Nombre" formControlName="first_name">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Apellido" formControlName="last_name">
+  </mat-form-field>
+  <mat-form-field>
+    <mat-select placeholder="Genero" formControlName="gender">
+        <mat-option value="male">
+          Male
+        </mat-option>
+        <mat-option value="female">
+          Female
+        </mat-option>
+    </mat-select>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput [matDatepicker]="dob" name="dob" 
+    placeholder="Cumpleaños" formControlName="dob" readonly
+    (click)="dob.open()">
+    <mat-datepicker-toggle matSuffix [for]="dob"></mat-datepicker-toggle>
+    <mat-datepicker #dob></mat-datepicker>
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Email" formControlName="email">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Teléfono" formControlName="phone">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Sitio web" formControlName="website">
+  </mat-form-field>
+  <mat-form-field>
+    <input matInput placeholder="Dirección" formControlName="address">
+  </mat-form-field>
+  <mat-progress-bar *ngIf="waitingServices" mode="indeterminate"></mat-progress-bar>
+  <div>
+    <button 
+      [disabled] = "waitingServices" 
+      type="submit" 
+      mat-raised-button 
+      color="primary">
+      Guardar
+    </button>
+    <button
+      [disabled] = "waitingServices" 
+      mat-button color="primary" (click)="cancelar()">
+        Cancelar
+    </button>
+  </div>
+</form>

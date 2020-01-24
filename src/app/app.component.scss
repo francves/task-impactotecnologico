@@ -1,0 +1,15 @@
+::ng-deep .formModal{
+    mat-dialog-container{
+        padding: 0px !important;
+    }
+    .spacer{
+        flex: 1 1 auto;
+    }
+    form{
+        padding: 0 24px 24px 24px !important;
+        
+        mat-form-field{
+            display: block !important;
+        }
+    }
+}
